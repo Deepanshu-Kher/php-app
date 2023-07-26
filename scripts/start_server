@@ -1,2 +1,12 @@
 #!/bin/bash
-systemctl start httpd
+# Check if httpd is installed
+httpd -v > /dev/null 2>&1
+if [ $? -eq 0 ]
+then
+    echo "httpd is installed, starting service."
+    sudo service httpd start
+else
+    echo "httpd not found. Installing httpd."
+    sudo yum install httpd -y
+    sudo service httpd start
+fi
